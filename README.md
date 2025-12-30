@@ -1,71 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karl Al Hub</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Roboto&display=swap');
 
-```markdown
-KarlWeb 💼🌐
+        html, body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            height: 100%;
+            font-family: 'Roboto', sans-serif;
+            overflow: hidden; /* Prevent scrollbars from water effect */
+            color: white;
+        }
 
-A modern, mobile-responsive website design service tailored for small businesses. *KarlWeb* delivers sleek, fast-loading, and user-friendly websites with a focus on conversion and clean UI/UX.
+        .music-notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #000000b3;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px #ffffff26;
+            z-index: 999;
+            display: none; /* Hidden by default */
+            animation: fadeIn 0.5s;
+        }
 
----
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-🚀 Features
+        /* Hide notification if music is muted */
+        body.music-muted .music-notification {
+            display: none !important;
+        }
 
-- Responsive design (mobile/tablet/desktop)
-- SEO-friendly layout
-- Fast loading speed
-- Clear, simple navigation
-- Built for small business needs
-- Support for landing pages, portfolios, e-commerce, and more
-- Delivered in under 2 weeks
+        audio {
+            display: none; /* Hidden audio element */
+        }
 
----
+        /* Gradient Water Tap Effect */
+        @keyframes waterripple {
+            0% { transform: translateY(0) scale(1) rotate(0); opacity: 0.8; }
+            50% { transform: translateY(200px) scale(1.2) rotate(3deg); opacity: 0.3; }
+            100% { transform: translateY(400px) scale(1.5) rotate(6deg); opacity: 0; }
+        }
 
-🛠️ Tech Stack
+        .water-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 900;
+            overflow: hidden; /* Crucial to contain drops */
+        }
 
-- HTML5
-- CSS3
-- JavaScript
-- Optional: Bootstrap (or other frameworks if added)
+        .water-tap {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            animation: waterripple 1s infinite linear; /* Linear for smoother animation */
+            pointer-events: none;
+            left: 50%;
+            top: -100px; /* Start above the viewport */
+        }
 
----
+        /* Main styles */
+        .main-container {
+            display: none; /* Hidden by default, shown after terms are accepted */
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top, #000000dd, #000);
+            justify-content: center; /* Center content horizontally */
+            align-items: center; /* Center content vertically */
+            position: relative; /* Needed for z-index to work on content */
+            z-index: 10; /* Ensure content is above water effect */
+        }
 
-📦 Installation
+        .content {
+            position: relative;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 20px;
+            box-shadow: 0 0 30px #ffffff1a;
+            margin: 20px; /* Add some margin for smaller screens */
+            text-align: center;
+            padding: 30px;
+            max-width: 800px;
+            width: 90%; /* Responsive width */
+            backdrop-filter: blur(12px);
+            box-sizing: border-box; /* Include padding in width */
+        }
 
-```bash
-git clone https://github.com/0786559552karl/Karlweb.git
-cd Karlweb
-open index.html in your browser
-```
+        .logo {
+            width: 120px; /* Slightly smaller logo */
+            height: 120px;
+            border: 4px solid #00ffe7;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            box-shadow: 0 0 20px #00ffe7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-> ⚙️ No build tools or server required — runs directly in the browser.
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
 
----
+        .title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem; /* Slightly smaller title */
+            color: #00ffe7;
+            text-shadow: 0 0 15px #00ffe7;
+            margin-bottom: 10px;
+        }
 
-🌐 Deployment
+        .subtitle {
+            font-size: 1.1rem; /* Slightly smaller subtitle */
+            color: #ffffff88;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
 
-Live demo: *(Add your hosted URL here if available)*  
-GitHub Repo: [KarlWeb on GitHub](https://github.com/0786559552karl/Karlweb)
+        .button-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            max-width: 600px;
+            margin: 20px auto;
+        }
 
----
+        @media (min-width: 600px) {
+            .button-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
 
-📄 License
+        .button {
+            padding: 18px; /* Slightly smaller padding */
+            background: #1a1a1a;
+            border: 1px solid #00ffe7;
+            border-radius: 12px;
+            font-size: 1rem; /* Smaller font size */
+            color: #00ffe7;
+            text-decoration: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px #00ffe733;
+            cursor: pointer; /* Make it clear it's clickable */
+        }
 
-This project is licensed under the *MIT License*.
+        .button:hover {
+            background: #00ffe7;
+            color: #000;
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px #00ffe766;
+        }
 
----
+        .footer {
+            margin-top: 30px; /* Slightly less margin */
+            text-align: center;
+            opacity: 0.6;
+            font-size: 0.85rem; /* Smaller footer text */
+        }
 
-📱 Meta Tags (for WhatsApp, Social & SEO)
+        /* Modal Styles */
+        .modal {
+            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95); /* Slightly darker background */
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden; /* Hidden by default */
+            animation: fadeInModal 0.5s ease-out forwards; /* Use forwards to keep final state */
+        }
 
-```html
-<meta property="og:title" content="KarlWeb – Website Design Services for Small Business" />
+        @keyframes fadeInModal {
+            from { opacity: 0; visibility: hidden; }
+            to { opacity: 1; visibility: visible; }
+        }
 
-<meta property="og:description" content="Fast, clean, and mobile-ready websites delivered in 2 weeks or less. Boost your business online with KarlWeb." />
-<meta property="og:image" content="https://yourdomain.com/preview.jpg" />
-<meta property="og:url" content="https://yourdomain.com" />
-<meta name="twitter:card" content="summary_large_image" />
-```
+        .modal-content {
+            background: #0a0a0a;
+            border-radius: 12px;
+            padding: 25px; /* Slightly more padding */
+            box-shadow: 0 0 30px #00ffe7;
+            max-width: 550px; /* Slightly smaller max-width */
+            width: 90%;
+            text-align: left;
+            animation: slideUp 0.6s ease-out forwards; /* Use forwards */
+            transform: translateY(40px); /* Initial state for animation */
+        }
 
----
+        @keyframes slideUp {
+            from { transform: translateY(40px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
 
-> Built with 💻 by [Karl Web Designer]
-```
+        .modal-title {
+            font-size: 1.6rem; /* Larger modal title */
+            color: #00ffe7;
+            margin-bottom: 20px;
+            text-align: center;
+        }
 
+        .modal-text {
+            line-height: 1.7; /* Increased line height */
+            color: #ddd; /* Slightly lighter text */
+            min-height: 180px; /* Adjust min-height */
+            padding: 15px; /* More padding inside text area */
+            background: rgba(255, 255, 255, 0.05);
+            margin-bottom: 20px;
+            border-radius: 8px;
+            overflow-y: auto; /* Add scroll if content exceeds height */
+            max-height: 300px; /* Limit modal text height */
+        }
 
+        .modal-text a {
+            color: #00ffe7;
+            text-decoration: underline;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            color: #ccc;
+        }
+
+        .checkbox-container input[type="checkbox"] {
+            margin-right: 12px; /* More spacing */
+            width: 18px;
+            height: 18px;
+            accent-color: #00ffe7; /* Customize checkbox color */
+            cursor: pointer;
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px; /* More margin */
+        }
+
+        .modal-button {
+            padding: 12px 25px; /* Larger buttons */
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .accept-button {
+            background: #4caf50;
+            color: white;
+        }
+
+        .decline-button {
+            background: #f44336;
+            color: white;
+        }
+
+        .accept-button:hover {
+            background: #45a049;
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+        }
+
+        .decline-button:hover {
+            background: #da190b;
+            box-shadow: 0 0 10px rgba(244, 67, 54, 0.5);
+        }
+
+        .music-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #1a1a1a;
+            padding: 12px 16px;
+            border: 1px solid #00ffe7;
+            border-radius: 6px;
+            cursor: pointer;
+            color: #00ffe7;
+            z-index: 999;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .music-button:hover {
+            background: #121212;
+            color: #fff;
+            transform: scale(1.1);
+        }
+
+        /* Developer Info Section */
+        .developerinfo {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border: 1px solid #00ffe722;
+        }
+
+        .developerinfo h3 {
+            color: #00ffe7;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .developerinfo p {
+            color: #ccc;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .developerinfo .modal-button { /* Reuse modal button styling for consistency */
+            background: #333;
+            color: #00ffe7;
+            margin-top: 15px;
+        }
+
+        .developerinfo .modal-button:hover {
+            background: #444;
+            color: #fff;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Water tap effect container -->
+    <div class="water-container"></div>
+
+    <!-- Music notification -->
+    <div class="music-notification" id="musicNotification">
+        <span>BGM Active</span>
+        <audio id="bgm" src="https://sendeyo.com/get/670d40746a" loop></audio>
+    </div>
+
+    <!-- Terms Modal -->
+    <div class="modal" id="termsModal">
+        <div class="modal-content">
+            <div class="modal-title">Terms and Conditions</div>
+            <div class="modal-text">
+                <p>Welcome to Karl Al Hub! By accessing this hub, you acknowledge and agree to the following:</p>
+                <ol>
+                    <li><strong>Acceptance of Terms:</strong> Your use of Karl Al Hub signifies your agreement to these terms and conditions.</li>
+                    <li><strong>Use of Services:</strong> This hub provides access to various digital services, including games, search functionalities, and AI tools. Use them responsibly.</li>
+                    <li><strong>User Responsibilities:</strong> You are responsible for any content you generate or share through these services and must not violate any laws or infringe on intellectual property rights.</li>
+                    <li><strong>Intellectual Property:</strong> All content and services on Karl Al Hub are the property of their respective owners or Karl Al Hub.</li>
+                    <li><strong>Limitation of Liability:</strong> Karl Al Hub is provided "as is" without warranties of any kind. We are not liable for any damages arising from your use.</li>
+                    <li><strong>Privacy Policy:</strong> Your privacy is important. Please refer to our privacy policy for details on how your data is handled.</li>
+                </ol>
+                <p>For the full legal document, please visit <a href="#" target="_blank">terms.karlalhub.com</a> (link is illustrative).</p>
+            </div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="agreeCheckbox">
+                <label for="agreeCheckbox">I have read and agree to the terms and conditions</label>
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-button decline-button" id="declineBtn">Decline</button>
+                <button class="modal-button accept-button" id="acceptBtn" disabled>Accept</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Music toggle -->
+    <div class="music-button" id="musicToggle">
+        <i class="fas fa-music"></i> BGM
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-container" id="mainContainer">
+        <div class="content">
+            <div class="logo">
+                <img src="https://i.ibb.co/Z68JqDpw/logo.png" alt="Karl Al Hub Logo">
+            </div>
+            <h1 class="title">Karl Al Hub</h1>
+            <p class="subtitle">Your Universal Portal to Digital Services</p>
+            
+            <div class="button-container">
+                <a href="https://apkmodget.com/" class="button" target="_blank">
+                    <i class="fas fa-gamepad"></i> Games Download
+                </a>
+                <a href="https://www.google.com/" class="button" target="_blank">
+                    <i class="fas fa-search"></i> Google Search
+                </a>
+                <a href="https://www.veed.io/tools/image-to-video-ai" class="button" target="_blank">
+                    <i class="fas fa-images"></i> AI Image to Video
+                </a>
+                <a href="https://www.livescore.com/en/" class="button" target="_blank">
+                    <i class="fas fa-futbol"></i> Live Scores
+                </a>
+                <a href="https://www.google.com/search?q=weather+tomorrow" class="button" target="_blank">
+                    <i class="fas fa-cloud-sun"></i> Weather Forecast
+                </a>
+                <button class="button" id="aboutBtn">
+                    <i class="fas fa-code"></i> About Developer
+                </button>
+                <a href="https://wa.me/2630777965084" class="button" target="_blank">
+                    <i class="fab fa-whatsapp"></i> Get Feedback
+                </a>
+            </div>
+
+            <div class="developerinfo" id="developerInfo">
+                <h3>Developer Profile</h3>
+                <p>Hi, I'm Marx Muronzi from Harare (Karl for coding). I'm 16 years old and actively developing youth-friendly digital tools at Glenview 3 High School.</p>
+                <button class="modal-button" id="closeInfoBtn">Close</button>
+            </div>
+
+            <div class="footer">
+                <p>Made with 💻 in Harare | Feedback: <a href="https://wa.me/2630777965084" target="_blank">WhatsApp</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Font Awesome -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script>
+        // --- Global Variables and Constants ---
+        const termsModal = document.getElementById('termsModal');
+        const mainContainer = document.getElementById('mainContainer');
+        const bgm = document.getElementById('bgm');
+        const musicToggle = document.getElementById('musicToggle');
+        const musicNotification = document.getElementById('musicNotification');
+        const agreeCheckbox = document.getElementById('agreeCheckbox');
+        const acceptBtn = document.getElementById('acceptBtn');
+        const declineBtn = document.getElementById('declineBtn');
+        const aboutBtn = document.getElementById('aboutBtn');
+        const developerInfo = document.getElementById('developerInfo');
+        const closeInfoBtn = document.getElementById('closeInfoBtn');
+        const waterContainer = document.querySelector('.water-container');
+
+        const localStorageKey = 'karl_terms_accepted';
+        let isMusicMuted = true; // Start muted
+
+        // --- Water Effect ---
+        function createWaterDrop() {
+            const drop = document.createElement('div');
+            drop.className = 'water-tap';
+            drop.style.left = `${Math.random() * 100}%`;
+            drop.style.animationDuration = `${Math.random() * 1.5 + 1}s`; // Vary duration
+            drop.style.animationDelay = `${Math.random() * 0.5}s`; // Slight delay variation
+            waterContainer.appendChild(drop);
+
+            // Remove the drop after its animation ends to prevent DOM bloat
+            drop.addEventListener('animationend', () => {
+                drop.remove();
+            });
+        }
+
+        // Initialize water effect
+        const waterInterval = setInterval(createWaterDrop, 500); // Create a drop every 500ms
+
+        // --- Terms and Conditions Handling ---
+        function checkTermsAccepted() {
+            const accepted = localStorage.getItem(localStorageKey);
+            if (accepted === 'true') {
+                termsModal.style.display = 'none';
+                mainContainer.style.display = 'flex';
+                termsModal.style.animation = 'none'; // Prevent animation on subsequent loads
+                document.body.classList.remove('music-muted'); // Ensure music plays if it was muted on load
+            } else {
+                termsModal.style.display = 'flex';
+                termsModal.style.visibility = 'visible';
+                mainContainer.style.display = 'none';
+                // Ensure music is muted if terms are not accepted
+                bgm.muted = true;
+                document.body.classList.add('music-muted');
+            }
+        }
+
+        function handleAcceptTerms() {
+            if (agreeCheckbox.checked) {
+                localStorage.setItem(localStorageKey, 'true');
+                termsModal.style.animation = 'fadeOutModal 0.5s forwards'; // Animate out
+                termsModal.addEventListener('animationend', () => {
+                    termsModal.style.display = 'none';
+                    mainContainer.style.display = 'flex';
+                    // Attempt to play music once terms are accepted
+                    playMusic();
+                }, { once: true });
+            } else {
+                alert('Please read and agree to the terms and conditions to proceed.');
+            }
+        }
+
+        function handleDeclineTerms() {
+            alert('You must accept the terms and conditions to access Karl Al Hub.');
+            // You might want to redirect or close the tab here for a stricter approach
+            // window.location.href = 'about:blank';
+        }
+
+        // Enable/disable accept button based on checkbox
+        agreeCheckbox.addEventListener('change', () => {
+            acceptBtn.disabled = !agreeCheckbox.checked;
+            if (agreeCheckbox.checked) {
+                acceptBtn.style.opacity = '1';
+                acceptBtn.style.cursor = 'pointer';
+            } else {
+                acceptBtn.style.opacity = '0.6';
+                acceptBtn.style.cursor = 'not-allowed';
+            }
+        });
+
+        acceptBtn.addEventListener('click', handleAcceptTerms);
+        declineBtn.addEventListener('click', handleDeclineTerms);
+
+        // --- Music Handling ---
+        function playMusic() {
+            if (bgm.paused) {
+                bgm.play().then(() => {
+                    isMusicMuted = false;
+                    document.body.classList.remove('music-muted');
+                    musicNotification.style.display = 'block';
+                    console.log("Music playing.");
+                }).catch(error => {
+                    console.warn("Autoplay prevented:", error);
+                    // If autoplay is blocked, it will remain muted until user interaction
+                    isMusicMuted = true;
+                    document.body.classList.add('music-muted');
+                    musicNotification.style.display = 'none';
+                });
+            }
+        }
+
+        function pauseMusic() {
+            bgm.pause();
+            isMusicMuted = true;
+            document.body.classList.add('music-muted');
+            musicNotification.style.display = 'none';
+            console.log("Music paused.");
+        }
+
+        musicToggle.addEventListener('click', () => {
+            if (isMusicMuted) {
+                playMusic();
+            } else {
+                pauseMusic();
+            }
+        });
+
+        // Initial check and setup
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check initial terms status
+            checkTermsAccepted();
+
+            // Initial music state based on localStorage or default
+            const mutedPreference = localStorage.getItem('karl_music_muted');
+            if (mutedPreference === 'true') {
+                pauseMusic();
+            } else {
+                // Attempt to play music only if terms are accepted
+                if (!termsModal.style.display || termsModal.style.display === 'none') {
+                    playMusic();
+                }
+            }
+
+            // Ensure accept button is initially disabled and styled
+            acceptBtn.disabled = true;
+            acceptBtn.style.opacity = '0.6';
+            acceptBtn.style.cursor = 'not-allowed';
+
+            // Developer Info Section
+            developerInfo.style.display = 'none'; // Hidden by default
+            aboutBtn.addEventListener('click', () => {
+                developerInfo.style.display = 'block';
+                // Optional: Hide main content or add overlay if needed
+            });
+            closeInfoBtn.addEventListener('click', () => {
+                developerInfo.style.display = 'none';
+            });
+        });
+
+        // Add a fade-out animation for the modal
+        const fadeOutModal = () => {
+            termsModal.style.animation = 'fadeOutModal 0.5s forwards';
+            termsModal.addEventListener('animationend', () => {
+                termsModal.style.display = 'none';
+                termsModal.style.visibility = 'hidden';
+                termsModal.style.animation = ''; // Reset animation property
+            }, { once: true });
+        };
+
+        // Custom animation for modal fade out
+        const styleSheet = document.styleSheets[0]; // Assuming your CSS is the first stylesheet
+        styleSheet.insertRule(`
+            @keyframes fadeOutModal {
+                from { opacity: 1; visibility: visible; }
+                to { opacity: 0; visibility: hidden; }
+            }
+        `, styleSheet.cssRules.length);
+
+        // Update checkTermsAccepted to use the new fadeOutModal
+        function checkTermsAccepted() {
+            const accepted = localStorage.getItem(localStorageKey);
+            if (accepted === 'true') {
+                termsModal.style.display = 'none';
+                termsModal.style.visibility = 'hidden';
+                mainContainer.style.display = 'flex';
+                document.body.classList.remove('music-muted'); // Ensure music plays if it was muted on load
+                // Attempt to play music if not already playing
+                playMusic();
+            } else {
+                termsModal.style.display = 'flex';
+                termsModal.style.visibility = 'visible';
+                mainContainer.style.display = 'none';
+                bgm.muted = true;
+                document.body.classList.add('music-muted');
+            }
+        }
+    </script>
+</body>
+</html>
