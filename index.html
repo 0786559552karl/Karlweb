@@ -13,8 +13,9 @@
             background: #000;
             height: 100%;
             font-family: 'Roboto', sans-serif;
-            overflow: hidden; /* Prevent scrollbars from water effect */
             color: white;
+            overflow-y: auto; /* Enable vertical scrolling */
+            overflow-x: hidden; /* Prevent horizontal scrolling */
         }
 
         .music-notification {
@@ -79,10 +80,9 @@
         .main-container {
             display: none; /* Hidden by default, shown after terms are accepted */
             width: 100%;
-            height: 100%;
+            min-height: 100vh; /* Minimum height to ensure full viewport */
             background: radial-gradient(circle at top, #000000dd, #000);
-            justify-content: center; /* Center content horizontally */
-            align-items: center; /* Center content vertically */
+            padding: 20px 0; /* Add padding for scrollable content */
             position: relative; /* Needed for z-index to work on content */
             z-index: 10; /* Ensure content is above water effect */
         }
@@ -174,11 +174,45 @@
             box-shadow: 0 0 20px #00ffe766;
         }
 
+        /* Business Advertiser Button Styling */
+        .business-advertiser-button {
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            color: white !important;
+            border: 2px solid #ff6b6b;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+            margin: 10px auto;
+            max-width: 300px;
+        }
+
+        .business-advertiser-button:hover {
+            background: linear-gradient(135deg, #ff5252, #26a69a);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 0 25px rgba(255, 107, 107, 0.6);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 107, 107, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0); }
+        }
+
+        .business-advertiser-text {
+            font-size: 0.85rem;
+            color: #ffffff88;
+            margin-top: 15px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.5;
+        }
+
         .footer {
             margin-top: 30px; /* Slightly less margin */
             text-align: center;
             opacity: 0.6;
             font-size: 0.85rem; /* Smaller footer text */
+            padding-bottom: 20px;
         }
 
         /* Modal Styles */
@@ -347,7 +381,6 @@
             background: #444;
             color: #fff;
         }
-
     </style>
 </head>
 <body>
@@ -423,6 +456,20 @@
                 <a href="https://wa.me/2630777965084" class="button" target="_blank">
                     <i class="fab fa-whatsapp"></i> Get Feedback
                 </a>
+                
+                <!-- Business Advertiser Button -->
+                <a href="https://wa.me/2630777965084?text=I%20am%20interested%20to%20get%20my%20business%20online" 
+                   class="button business-advertiser-button" 
+                   target="_blank">
+                    <i class="fas fa-bullhorn"></i> BUSINESS ADVERTISER
+                </a>
+            </div>
+
+            <!-- Business Advertiser Information -->
+            <div class="business-advertiser-text">
+                <p><strong>Advertise your small scale business online with Karl AI!</strong><br>
+                Book your advertising slot today and reach thousands of potential customers.<br>
+                Contact us on WhatsApp: <strong>+263 0777 965 084</strong></p>
             </div>
 
             <div class="developerinfo" id="developerInfo">
@@ -480,14 +527,15 @@
             const accepted = localStorage.getItem(localStorageKey);
             if (accepted === 'true') {
                 termsModal.style.display = 'none';
-                mainContainer.style.display = 'flex';
-                termsModal.style.animation = 'none'; // Prevent animation on subsequent loads
+                termsModal.style.visibility = 'hidden';
+                mainContainer.style.display = 'block'; // Changed to block for scrollable content
                 document.body.classList.remove('music-muted'); // Ensure music plays if it was muted on load
+                // Attempt to play music if not already playing
+                playMusic();
             } else {
                 termsModal.style.display = 'flex';
                 termsModal.style.visibility = 'visible';
                 mainContainer.style.display = 'none';
-                // Ensure music is muted if terms are not accepted
                 bgm.muted = true;
                 document.body.classList.add('music-muted');
             }
@@ -499,7 +547,8 @@
                 termsModal.style.animation = 'fadeOutModal 0.5s forwards'; // Animate out
                 termsModal.addEventListener('animationend', () => {
                     termsModal.style.display = 'none';
-                    mainContainer.style.display = 'flex';
+                    termsModal.style.visibility = 'hidden';
+                    mainContainer.style.display = 'block'; // Show main content as block for scrolling
                     // Attempt to play music once terms are accepted
                     playMusic();
                 }, { once: true });
@@ -574,7 +623,7 @@
                 pauseMusic();
             } else {
                 // Attempt to play music only if terms are accepted
-                if (!termsModal.style.display || termsModal.style.display === 'none') {
+                if (mainContainer.style.display !== 'none') {
                     playMusic();
                 }
             }
@@ -587,51 +636,44 @@
             // Developer Info Section
             developerInfo.style.display = 'none'; // Hidden by default
             aboutBtn.addEventListener('click', () => {
-                developerInfo.style.display = 'block';
-                // Optional: Hide main content or add overlay if needed
+                if (developerInfo.style.display === 'none' || developerInfo.style.display === '') {
+                    developerInfo.style.display = 'block';
+                    // Smooth scroll to developer info
+                    developerInfo.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
             });
             closeInfoBtn.addEventListener('click', () => {
                 developerInfo.style.display = 'none';
             });
+
+            // Add smooth scrolling for the entire page
+            document.documentElement.style.scrollBehavior = 'smooth';
         });
 
         // Add a fade-out animation for the modal
-        const fadeOutModal = () => {
-            termsModal.style.animation = 'fadeOutModal 0.5s forwards';
-            termsModal.addEventListener('animationend', () => {
-                termsModal.style.display = 'none';
-                termsModal.style.visibility = 'hidden';
-                termsModal.style.animation = ''; // Reset animation property
-            }, { once: true });
-        };
-
-        // Custom animation for modal fade out
         const styleSheet = document.styleSheets[0]; // Assuming your CSS is the first stylesheet
-        styleSheet.insertRule(`
-            @keyframes fadeOutModal {
-                from { opacity: 1; visibility: visible; }
-                to { opacity: 0; visibility: hidden; }
-            }
-        `, styleSheet.cssRules.length);
-
-        // Update checkTermsAccepted to use the new fadeOutModal
-        function checkTermsAccepted() {
-            const accepted = localStorage.getItem(localStorageKey);
-            if (accepted === 'true') {
-                termsModal.style.display = 'none';
-                termsModal.style.visibility = 'hidden';
-                mainContainer.style.display = 'flex';
-                document.body.classList.remove('music-muted'); // Ensure music plays if it was muted on load
-                // Attempt to play music if not already playing
-                playMusic();
-            } else {
-                termsModal.style.display = 'flex';
-                termsModal.style.visibility = 'visible';
-                mainContainer.style.display = 'none';
-                bgm.muted = true;
-                document.body.classList.add('music-muted');
+        let fadeOutExists = false;
+        for (let i = 0; i < styleSheet.cssRules.length; i++) {
+            if (styleSheet.cssRules[i].name === 'fadeOutModal') {
+                fadeOutExists = true;
+                break;
             }
         }
+        if (!fadeOutExists) {
+            styleSheet.insertRule(`
+                @keyframes fadeOutModal {
+                    from { opacity: 1; visibility: visible; }
+                    to { opacity: 0; visibility: hidden; }
+                }
+            `, styleSheet.cssRules.length);
+        }
+
+        // Handle window resize to ensure proper scrolling
+        window.addEventListener('resize', () => {
+            if (mainContainer.style.display !== 'none') {
+                mainContainer.style.minHeight = window.innerHeight + 'px';
+            }
+        });
     </script>
 </body>
 </html>
