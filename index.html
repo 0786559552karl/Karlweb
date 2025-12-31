@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -350,6 +351,35 @@
             transform: scale(1.1);
         }
 
+        /* AI Ask Button - Small Circle */
+        .ai-button {
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            background: #1a1a1a;
+            border: 1px solid #00ffe7;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            color: #00ffe7;
+            font-size: 1.5rem;
+            z-index: 999;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px #00ffe733;
+            text-decoration: none;
+        }
+
+        .ai-button:hover {
+            background: #00ffe7;
+            color: #000;
+            transform: scale(1.1);
+            box-shadow: 0 0 20px #00ffe766;
+        }
+
         /* Developer Info Section */
         .developerinfo {
             margin-top: 30px;
@@ -390,7 +420,7 @@
     <!-- Music notification -->
     <div class="music-notification" id="musicNotification">
         <span>BGM Active</span>
-        <audio id="bgm" src="https://sendeyo.com/get/670d40746a" loop></audio>
+        <audio id="bgm" src="https://musicgpt.com/audio/b1e7516a-f745-4b06-ad2a-f47240adaabc" loop></audio>
     </div>
 
     <!-- Terms Modal -->
@@ -425,6 +455,11 @@
         <i class="fas fa-music"></i> BGM
     </div>
 
+    <!-- AI Ask Button - Small Circle -->
+    <a href="https://chat.openai.com/" class="ai-button" target="_blank" title="Ask an AI">
+        <i class="fas fa-robot"></i>
+    </a>
+
     <!-- Main Content -->
     <div class="main-container" id="mainContainer">
         <div class="content">
@@ -435,6 +470,12 @@
             <p class="subtitle">Your Universal Portal to Digital Services</p>
             
             <div class="button-container">
+                <a href="https://fzmovie.co.za/" class="button" target="_blank">
+                    <i class="fas fa-film"></i> SA Movie Download
+                </a>
+                <a href="https://openai.com/" class="button" target="_blank">
+                    <i class="fas fa-graduation-cap"></i> Research Homework with AI
+                </a>
                 <a href="https://apkmodget.com/" class="button" target="_blank">
                     <i class="fas fa-gamepad"></i> Games Download
                 </a>
@@ -447,7 +488,7 @@
                 <a href="https://www.livescore.com/en/" class="button" target="_blank">
                     <i class="fas fa-futbol"></i> Live Scores
                 </a>
-                <a href="https://www.google.com/search?q=weather+tomorrow" class="button" target="_blank">
+                <a href="https://www.bbc.com/weather/" class="button" target="_blank">
                     <i class="fas fa-cloud-sun"></i> Weather Forecast
                 </a>
                 <button class="button" id="aboutBtn">
@@ -676,4 +717,3 @@
         });
     </script>
 </body>
-</html>
