@@ -264,6 +264,122 @@
             border-color: rgba(0, 255, 231, 0.8);
         }
 
+        /* Coming Soon Button Style */
+        .coming-soon-button {
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.2), rgba(255, 152, 0, 0.2));
+            border: 2px solid #ff9800;
+            color: #ff9800;
+            animation: pulseComingSoon 2s infinite;
+        }
+
+        .coming-soon-button:hover {
+            background: linear-gradient(135deg, #ff9800, #ffc107);
+            color: #000;
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 
+                0 15px 40px rgba(255, 152, 0, 0.6),
+                0 0 20px rgba(255, 152, 0, 0.4);
+            border-color: #ff9800;
+        }
+
+        @keyframes pulseComingSoon {
+            0%, 100% { 
+                box-shadow: 
+                    0 8px 32px rgba(255, 152, 0, 0.3),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                    0 0 20px rgba(255, 152, 0, 0.2);
+            }
+            50% { 
+                box-shadow: 
+                    0 8px 32px rgba(255, 152, 0, 0.5),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                    0 0 30px rgba(255, 152, 0, 0.4);
+            }
+        }
+
+        /* Under Construction Modal */
+        .under-construction-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .under-construction-content {
+            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+            border: 2px solid #ff9800;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 
+                0 0 50px rgba(255, 152, 0, 0.5),
+                inset 0 0 20px rgba(255, 255, 255, 0.05);
+            animation: modalSlideIn 0.5s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: scale(0.8) translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .under-construction-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2rem;
+            color: #ff9800;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(255, 152, 0, 0.5);
+        }
+
+        .under-construction-text {
+            color: #ffffff;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .construction-icon {
+            font-size: 4rem;
+            color: #ff9800;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .close-construction-btn {
+            background: linear-gradient(135deg, #ff9800, #ffc107);
+            color: #000;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
+        }
+
+        .close-construction-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 152, 0, 0.4);
+        }
+
         /* Modal and other existing styles remain the same */
         .main-container, .modal, .logo, .title, .subtitle, .button-container,
         .business-advertiser-button, .footer, .voice-button {
@@ -280,6 +396,15 @@
             .content {
                 margin: 15px;
                 padding: 30px 25px;
+            }
+
+            .under-construction-content {
+                padding: 30px 20px;
+                margin: 20px;
+            }
+
+            .under-construction-title {
+                font-size: 1.5rem;
             }
         }
     </style>
@@ -325,17 +450,34 @@
         </div>
     </div>
 
+    <!-- Under Construction Modal -->
+    <div class="under-construction-modal" id="underConstructionModal">
+        <div class="under-construction-content">
+            <div class="construction-icon">🚧</div>
+            <h2 class="under-construction-title">Under Construction</h2>
+            <p class="under-construction-text">
+                This feature is currently under development and will be available soon!<br>
+                Stay tuned for exciting updates from Karl AI Hub. Thank you for your patience!
+            </p>
+            <button class="close-construction-btn" id="closeConstructionBtn">Close</button>
+        </div>
+    </div>
+
     <!-- Music toggle -->
     <div class="music-button" id="musicToggle">
         <i class="fas fa-music"></i> BGM
     </div>
 
-    <!-- Voice AI Assistant Button -->
-    <button class="voice-button" id="voiceAssistant" title="Voice Assistant">
+    <!-- Karl AI Voice Assistant Button -->
+    <button class="voice-button" id="voiceAssistant" title="Karl AI Assistant">
         <svg viewBox="0 0 24 24">
             <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.1-1.3l.9 1.54c.44.76-.18 1.62-.94 1.62H9.26c-.76 0-1.38-.86-.94-1.62l.9-1.54C10.72 13.4 9.17 14 9 14v4h6v-4c.18 0-1.55-.6-2.9-2.7z"/>
         </svg>
+        <span style="font-size: 0.8rem; margin-left: 5px;">Karl AI</span>
     </button>
+
+    <!-- Appy Agent widget for Karl AI -->
+    <script src="https://agent.appypieagents.ai/widget/loadnew.js?companyId=67829f9f292934827886ed90&botId=BOTID1767696520613&agentId=67829f9f292934827886ed90"></script>
 
     <!-- Main Content -->
     <div class="main-container" id="mainContainer">
@@ -380,6 +522,15 @@
                 <a href="https://www.bbc.com/weather/" class="button" target="_blank">
                     <i class="fas fa-cloud-sun"></i> Weather Forecast
                 </a>
+                
+                <!-- New Coming Soon Buttons -->
+                <button class="button coming-soon-button" id="freeDataBtn">
+                    <i class="fas fa-wifi"></i> 📱 Free Data Browsing *Coming Soon*
+                </button>
+                
+                <button class="button coming-soon-button" id="freeDstvBtn">
+                    <i class="fas fa-tv"></i> 📺 Free DSTV *Coming Soon*
+                </button>
                 
                 <button class="button" id="aboutBtn">
                     <i class="fas fa-code"></i> About Developer
@@ -432,15 +583,7 @@
             }, 1000);
         }, 4500);
 
-        // Your existing JavaScript (all preserved and enhanced)
-        const termsModal = document.getElementById('termsModal');
-        const mainContainer = document.getElementById('mainContainer');
-        const bgm = document.getElementById('bgm');
-        // ... rest of your existing JS code remains exactly the same
-        
-        // All your existing functions (checkTermsAccepted, handleAcceptTerms, etc.)
-        // remain unchanged - just add them here as they were
-        
+        // Under Construction Modal functionality
         document.addEventListener('DOMContentLoaded', () => {
             // Water effect
             const waterContainer = document.querySelector('.water-container');
@@ -452,7 +595,106 @@
                 waterContainer.appendChild(drop);
                 setTimeout(() => drop.remove(), 2000);
             }, 300);
+
+            // Coming Soon buttons functionality
+            const freeDataBtn = document.getElementById('freeDataBtn');
+            const freeDstvBtn = document.getElementById('freeDstvBtn');
+            const underConstructionModal = document.getElementById('underConstructionModal');
+            const closeConstructionBtn = document.getElementById('closeConstructionBtn');
+
+            freeDataBtn.addEventListener('click', () => {
+                underConstructionModal.style.display = 'flex';
+            });
+
+            freeDstvBtn.addEventListener('click', () => {
+                underConstructionModal.style.display = 'flex';
+            });
+
+            closeConstructionBtn.addEventListener('click', () => {
+                underConstructionModal.style.display = 'none';
+            });
+
+            // Close modal when clicking outside
+            underConstructionModal.addEventListener('click', (e) => {
+                if (e.target === underConstructionModal) {
+                    underConstructionModal.style.display = 'none';
+                }
+            });
+
+            // Close modal with Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && underConstructionModal.style.display === 'flex') {
+                    underConstructionModal.style.display = 'none';
+                }
+            });
         });
+
+        // Your existing JavaScript (all preserved and enhanced)
+        const termsModal = document.getElementById('termsModal');
+        const mainContainer = document.getElementById('mainContainer');
+        const bgm = document.getElementById('bgm');
+        
+        // All your existing functions (checkTermsAccepted, handleAcceptTerms, etc.)
+        // remain unchanged - just add them here as they were
+        
+        function checkTermsAccepted() {
+            // Your existing terms check logic
+            if (!localStorage.getItem('termsAccepted')) {
+                termsModal.style.display = 'flex';
+                mainContainer.style.display = 'none';
+            }
+        }
+
+        function handleAcceptTerms() {
+            // Your existing accept terms logic
+            localStorage.setItem('termsAccepted', 'true');
+            termsModal.style.display = 'none';
+            mainContainer.style.display = 'block';
+        }
+
+        function handleDeclineTerms() {
+            // Your existing decline terms logic
+            alert('You must accept the terms to use Karl AI Hub.');
+            window.location.reload();
+        }
+
+        // Event listeners for terms modal (if they exist in your original code)
+        const agreeCheckbox = document.getElementById('agreeCheckbox');
+        const acceptBtn = document.getElementById('acceptBtn');
+        const declineBtn = document.getElementById('declineBtn');
+
+        if (agreeCheckbox && acceptBtn && declineBtn) {
+            agreeCheckbox.addEventListener('change', () => {
+                acceptBtn.disabled = !agreeCheckbox.checked;
+            });
+
+            acceptBtn.addEventListener('click', handleAcceptTerms);
+            declineBtn.addEventListener('click', handleDeclineTerms);
+        }
+
+        // Voice assistant button (enhanced for Karl AI)
+        const voiceAssistant = document.getElementById('voiceAssistant');
+        if (voiceAssistant) {
+            voiceAssistant.addEventListener('click', () => {
+                // The Appy Agent widget should handle the voice interaction
+                // You can add additional functionality here if needed
+                console.log('Karl AI Assistant activated');
+            });
+        }
+
+        // Music toggle functionality (if it exists)
+        const musicToggle = document.getElementById('musicToggle');
+        if (musicToggle) {
+            musicToggle.addEventListener('click', () => {
+                if (bgm.paused) {
+                    bgm.play();
+                    musicToggle.style.opacity = '1';
+                } else {
+                    bgm.pause();
+                    musicToggle.style.opacity = '0.5';
+                }
+            });
+        }
     </script>
 </body>
 </html>
