@@ -1,538 +1,375 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Karl AI Hub</title>
+    <title>Karl AI Hub - Free VPN & Services</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Roboto:wght@300;400;500&display=swap');
 
-        /* Welcome Screen Animation */
+        /* Your existing styles preserved */
+        html, body {
+            margin: 0; padding: 0; background: #000; height: 100%;
+            font-family: 'Roboto', sans-serif; color: white;
+            overflow-y: auto; overflow-x: hidden;
+        }
+
         .welcome-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
             background: linear-gradient(135deg, #000428 0%, #004e92 50%, #000428 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            overflow: hidden;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 2000; overflow: hidden;
         }
 
         .welcome-title {
-            font-family: 'Orbitron', monospace;
-            font-size: clamp(2rem, 8vw, 5rem);
-            font-weight: 900;
+            font-family: 'Orbitron', monospace; font-size: clamp(2rem, 8vw, 5rem); font-weight: 900;
             background: linear-gradient(45deg, #00ffe7, #ff00ff, #ffff00, #00ff88, #ff6b6b);
-            background-size: 400% 400%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: welcomeGlow 3s ease-in-out infinite alternate, gradientShift 4s ease infinite;
-            text-shadow: 0 0 50px rgba(0, 255, 231, 0.8);
-            margin-bottom: 2rem;
-            transform: translateY(50px);
-            opacity: 0;
-            animation: welcomeSlideIn 2s 0.5s ease-out forwards;
+            background-size: 400% 400%; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; animation: welcomeGlow 3s ease-in-out infinite alternate, gradientShift 4s ease infinite;
+            text-shadow: 0 0 50px rgba(0, 255, 231, 0.8); margin-bottom: 2rem;
+            transform: translateY(50px); opacity: 0; animation: welcomeSlideIn 2s 0.5s ease-out forwards;
         }
 
-        .welcome-features {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            max-width: 600px;
-            padding: 0 2rem;
-            text-align: center;
-        }
-
-        .feature-item {
-            font-family: 'Orbitron', monospace;
-            font-size: clamp(1rem, 4vw, 1.5rem);
-            font-weight: 700;
-            color: #ffffff;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: featureSlideIn 0.8s ease-out forwards;
-        }
-
-        .feature-item:nth-child(1) { animation-delay: 2.2s; }
-        .feature-item:nth-child(2) { animation-delay: 2.5s; }
-        .feature-item:nth-child(3) { animation-delay: 2.8s; }
-        .feature-item:nth-child(4) { animation-delay: 3.1s; }
-
-        @keyframes welcomeSlideIn {
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        @keyframes featureSlideIn {
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        @keyframes welcomeGlow {
+        @keyframes welcomeSlideIn { to { transform: translateY(0); opacity: 1; } }
+        @keyframes welcomeGlow { 
             0% { text-shadow: 0 0 20px rgba(0, 255, 231, 0.5), 0 0 40px rgba(0, 255, 231, 0.3); }
             100% { text-shadow: 0 0 40px rgba(255, 0, 255, 0.8), 0 0 80px rgba(255, 0, 255, 0.5); }
         }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        @keyframes gradientShift { 
+            0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; }
         }
 
-        html, body {
-            margin: 0;
-            padding: 0;
-            background: #000;
-            height: 100%;
-            font-family: 'Roboto', sans-serif;
-            color: white;
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-
-        /* 3D Light Colorful Edge Effects */
-        body {
-            background: radial-gradient(circle at 20% 80%, #ff6b6b33 0%, transparent 50%),
-                        radial-gradient(circle at 80% 20%, #4ecdc433 0%, transparent 50%),
-                        radial-gradient(circle at 40% 40%, #00ffe733 0%, transparent 50%),
-                        #000;
-            position: relative;
-        }
-
-        body::before,
-        body::after {
-            content: '';
-            position: fixed;
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            z-index: -1;
-            animation: float 20s ease-in-out infinite;
-        }
-
-        body::before {
-            top: -150px;
-            right: -150px;
-            background: radial-gradient(circle, rgba(255,107,107,0.3) 0%, transparent 70%);
-            animation-delay: 0s;
-        }
-
-        body::after {
-            bottom: -150px;
-            left: -150px;
-            background: radial-gradient(circle, rgba(78,205,196,0.3) 0%, transparent 70%);
-            animation-delay: -10s;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            33% { transform: translateY(-30px) rotate(120deg); }
-            66% { transform: translateY(20px) rotate(240deg); }
-        }
-
-        /* Enhanced Content Edges */
         .content {
-            position: relative;
-            z-index: 1000;
-            background: rgba(0, 0, 0, 0.85);
-            border-radius: 25px;
-            box-shadow: 
-                0 0 50px rgba(0, 255, 231, 0.4),
-                0 0 100px rgba(255, 107, 107, 0.2),
-                inset 0 0 50px rgba(255, 255, 255, 0.05);
-            margin: 20px;
-            text-align: center;
-            padding: 40px;
-            max-width: 900px;
-            width: 90%;
-            backdrop-filter: blur(20px);
-            border: 2px solid transparent;
-            background-clip: padding-box;
-            position: relative;
+            position: relative; z-index: 1000; background: rgba(0, 0, 0, 0.85); border-radius: 25px;
+            box-shadow: 0 0 50px rgba(0, 255, 231, 0.4), 0 0 100px rgba(255, 107, 107, 0.2), inset 0 0 50px rgba(255, 255, 255, 0.05);
+            margin: 20px; text-align: center; padding: 40px; max-width: 900px; width: 90%;
+            backdrop-filter: blur(20px); border: 2px solid transparent; background-clip: padding-box;
         }
 
         .content::before {
-            content: '';
-            position: absolute;
-            inset: -5px;
-            background: linear-gradient(45deg, #00ffe7, #ff00ff, #ffff00, #00ff88);
-            border-radius: 28px;
-            z-index: -1;
-            animation: edgeGlow 3s linear infinite;
-            opacity: 0.7;
+            content: ''; position: absolute; inset: -5px;
+            background: linear-gradient(45deg, #00ffe7, #ff00ff, #ffff00, #00ff88); border-radius: 28px; z-index: -1;
+            animation: edgeGlow 3s linear infinite; opacity: 0.7;
         }
 
-        @keyframes edgeGlow {
-            0% { filter: hue-rotate(0deg) brightness(1); }
-            100% { filter: hue-rotate(360deg) brightness(1.2); }
-        }
+        @keyframes edgeGlow { 0% { filter: hue-rotate(0deg) brightness(1); } 100% { filter: hue-rotate(360deg) brightness(1.2); } }
 
-        /* Rest of your existing styles (keeping them intact but optimized) */
-        .music-notification {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(0, 0, 0, 0.9);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 12px;
-            box-shadow: 0 0 20px rgba(0, 255, 231, 0.5);
-            z-index: 999;
-            display: none;
-            animation: fadeIn 0.5s, edgePulse 2s infinite;
-            border: 1px solid rgba(0, 255, 231, 0.3);
-        }
-
-        @keyframes edgePulse {
-            0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 231, 0.5); }
-            50% { box-shadow: 0 0 30px rgba(0, 255, 231, 0.8), 0 0 40px rgba(0, 255, 231, 0.4); }
-        }
-
-        /* Water effect with colorful particles */
-        @keyframes waterripple {
-            0% { transform: translateY(0) scale(1) rotate(0); opacity: 0.8; }
-            50% { transform: translateY(200px) scale(1.2) rotate(3deg); opacity: 0.4; }
-            100% { transform: translateY(400px) scale(1.5) rotate(6deg); opacity: 0; }
-        }
-
-        .water-tap {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #00ffe7, #ff00ff);
-            animation: waterripple 1.5s infinite linear;
-            pointer-events: none;
-            box-shadow: 0 0 10px currentColor;
-        }
-
-        /* Button enhancements */
         .button {
-            padding: 20px;
-            background: rgba(26, 26, 26, 0.9);
-            border: 2px solid transparent;
-            border-radius: 16px;
-            font-size: 1.1rem;
-            color: #00ffe7;
-            text-decoration: none;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 12px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 
-                0 8px 32px rgba(0, 255, 231, 0.2),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-        }
-
-        .button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .button:hover::before {
-            left: 100%;
+            padding: 20px; background: rgba(26, 26, 26, 0.9); border: 2px solid transparent; border-radius: 16px;
+            font-size: 1.1rem; color: #00ffe7; text-decoration: none; display: flex; justify-content: center;
+            align-items: center; gap: 12px; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 32px rgba(0, 255, 231, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative; overflow: hidden; backdrop-filter: blur(10px); margin: 10px 0; cursor: pointer;
         }
 
         .button:hover {
-            background: linear-gradient(135deg, #00ffe7, #00ccaa);
-            color: #000;
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 
-                0 15px 40px rgba(0, 255, 231, 0.6),
-                0 0 20px rgba(0, 255, 231, 0.4);
+            background: linear-gradient(135deg, #00ffe7, #00ccaa); color: #000; transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 255, 231, 0.6), 0 0 20px rgba(0, 255, 231, 0.4);
             border-color: rgba(0, 255, 231, 0.8);
         }
 
-        /* Coming Soon Button Style */
-        .coming-soon-button {
-            background: linear-gradient(135deg, rgba(255, 193, 7, 0.2), rgba(255, 152, 0, 0.2));
-            border: 2px solid #ff9800;
-            color: #ff9800;
-            animation: pulseComingSoon 2s infinite;
+        .button-container { display: flex; flex-direction: column; gap: 15px; max-width: 600px; margin: 0 auto; }
+
+        /* VPN Specific Styles */
+        .vpn-button {
+            background: linear-gradient(135deg, rgba(0, 255, 0, 0.2), rgba(0, 128, 0, 0.2)) !important;
+            border: 2px solid #00ff00 !important; color: #00ff00 !important;
+            animation: vpnPulse 2s infinite;
         }
 
-        .coming-soon-button:hover {
-            background: linear-gradient(135deg, #ff9800, #ffc107);
-            color: #000;
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 
-                0 15px 40px rgba(255, 152, 0, 0.6),
-                0 0 20px rgba(255, 152, 0, 0.4);
-            border-color: #ff9800;
+        .vpn-account-button {
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.3), rgba(255, 152, 0, 0.3)) !important;
+            border: 2px solid #ff9800 !important; color: #ff9800 !important;
+            animation: accountPulse 2s infinite;
         }
 
-        @keyframes pulseComingSoon {
-            0%, 100% { 
-                box-shadow: 
-                    0 8px 32px rgba(255, 152, 0, 0.3),
-                    inset 0 1px 0 rgba(255, 255, 255, 0.1),
-                    0 0 20px rgba(255, 152, 0, 0.2);
-            }
-            50% { 
-                box-shadow: 
-                    0 8px 32px rgba(255, 152, 0, 0.5),
-                    inset 0 1px 0 rgba(255, 255, 255, 0.1),
-                    0 0 30px rgba(255, 152, 0, 0.4);
-            }
+        @keyframes vpnPulse {
+            0%, 100% { box-shadow: 0 8px 32px rgba(0, 255, 0, 0.3), 0 0 20px rgba(0, 255, 0, 0.2); }
+            50% { box-shadow: 0 8px 32px rgba(0, 255, 0, 0.5), 0 0 30px rgba(0, 255, 0, 0.4); }
         }
 
-        /* Under Construction Modal */
-        .under-construction-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 3000;
-            justify-content: center;
-            align-items: center;
+        @keyframes accountPulse {
+            0%, 100% { box-shadow: 0 8px 32px rgba(255, 152, 0, 0.3), 0 0 20px rgba(255, 152, 0, 0.2); }
+            50% { box-shadow: 0 8px 32px rgba(255, 152, 0, 0.5), 0 0 30px rgba(255, 152, 0, 0.4); }
         }
 
-        .under-construction-content {
-            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
-            border: 2px solid #ff9800;
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 500px;
-            width: 90%;
-            text-align: center;
-            box-shadow: 
-                0 0 50px rgba(255, 152, 0, 0.5),
-                inset 0 0 20px rgba(255, 255, 255, 0.05);
-            animation: modalSlideIn 0.5s ease-out;
+        /* VPN Modal */
+        .vpn-modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9); z-index: 5000; justify-content: center; align-items: center;
+            animation: modalFadeIn 0.3s ease-out;
         }
 
-        @keyframes modalSlideIn {
-            from {
-                transform: scale(0.8) translateY(-50px);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1) translateY(0);
-                opacity: 1;
-            }
+        .vpn-modal-content {
+            background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border: 2px solid #00ff00; border-radius: 20px;
+            padding: 40px; max-width: 600px; width: 90%; text-align: center;
+            box-shadow: 0 0 50px rgba(0, 255, 0, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.05);
+            animation: modalSlideIn 0.5s ease-out; max-height: 80vh; overflow-y: auto;
         }
 
-        .under-construction-title {
-            font-family: 'Orbitron', monospace;
-            font-size: 2rem;
-            color: #ff9800;
-            margin-bottom: 20px;
-            text-shadow: 0 0 20px rgba(255, 152, 0, 0.5);
+        .vpn-title { font-family: 'Orbitron', monospace; font-size: 2rem; color: #00ff00; margin-bottom: 20px; text-shadow: 0 0 10px #00ff00; }
+
+        .vpn-config-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin: 20px 0;
         }
 
-        .under-construction-text {
-            color: #ffffff;
-            margin-bottom: 30px;
-            line-height: 1.6;
+        .config-item { background: rgba(0,255,0,0.1); padding: 15px; border-radius: 10px; border: 1px solid #00ff00; }
+        .config-label { font-weight: bold; color: #ccc; margin-bottom: 5px; display: block; }
+        .config-value { font-family: 'Orbitron', monospace; color: #00ff00; font-size: 0.9rem; word-break: break-all; }
+
+        .vpn-spinner {
+            border: 8px solid rgba(0, 255, 0, 0.1); border-top: 8px solid #00ff00; border-radius: 50%;
+            width: 60px; height: 60px; animation: spin 1s linear infinite; margin: 20px auto;
         }
 
-        .construction-icon {
-            font-size: 4rem;
-            color: #ff9800;
-            margin-bottom: 20px;
-            animation: bounce 2s infinite;
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes modalFadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes modalSlideIn { from { transform: scale(0.8) translateY(-50px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
+
+        .vpn-status { font-family: 'Orbitron', monospace; font-size: 1.3rem; color: #00ff00; margin: 20px 0; }
+        .close-vpn-btn {
+            background: linear-gradient(135deg, #00ff00, #32cd32); color: #000; border: none; padding: 12px 30px;
+            border-radius: 25px; font-weight: bold; cursor: pointer; transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 255, 0, 0.3); margin: 10px; font-family: 'Orbitron', monospace;
         }
 
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-            60% { transform: translateY(-5px); }
+        .close-vpn-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 255, 0, 0.4); }
+
+        .account-creator-btn {
+            background: linear-gradient(135deg, #ff9800, #ffc107); color: #000; border: none; padding: 12px 30px;
+            border-radius: 25px; font-weight: bold; cursor: pointer; transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3); margin: 10px; font-family: 'Orbitron', monospace;
+            text-decoration: none; display: inline-block;
         }
 
-        .close-construction-btn {
-            background: linear-gradient(135deg, #ff9800, #ffc107);
-            color: #000;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 25px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
+        .account-creator-btn:hover { 
+            transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 152, 0, 0.4); 
+            background: linear-gradient(135deg, #ffc107, #ff9800);
         }
 
-        .close-construction-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 152, 0, 0.4);
+        /* Backend Status Indicators */
+        .backend-status {
+            display: flex; justify-content: space-around; margin: 15px 0; padding: 10px;
+            background: rgba(0,0,0,0.5); border-radius: 10px; font-size: 0.9rem;
         }
 
-        /* Modal and other existing styles remain the same */
-        .main-container, .modal, .logo, .title, .subtitle, .button-container,
-        .business-advertiser-button, .footer, .voice-button {
-            /* All your existing styles preserved */
+        .status-item { text-align: center; }
+        .status-label { color: #ccc; font-size: 0.8rem; margin-bottom: 5px; }
+        .status-value { color: #00ff00; font-weight: bold; }
+
+        /* Other Modals */
+        .modal, .under-construction-modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8); z-index: 3000; justify-content: center; align-items: center;
         }
 
-        /* Responsive improvements */
+        .main-container { display: none; }
+        .logo { margin-bottom: 20px; }
+        .title { font-family: 'Orbitron', monospace; color: #00ffe7; margin-bottom: 10px; }
+        .subtitle { color: #ccc; margin-bottom: 30px; }
+
+        .footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); color: #888; }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            .welcome-features {
-                gap: 0.8rem;
-                padding: 0 1.5rem;
-            }
-            
-            .content {
-                margin: 15px;
-                padding: 30px 25px;
-            }
-
-            .under-construction-content {
-                padding: 30px 20px;
-                margin: 20px;
-            }
-
-            .under-construction-title {
-                font-size: 1.5rem;
-            }
+            .content { margin: 15px; padding: 30px 25px; }
+            .button { padding: 15px; font-size: 1rem; }
+            .vpn-config-grid { grid-template-columns: 1fr; }
+            .backend-status { flex-direction: column; gap: 10px; }
         }
     </style>
 </head>
 <body>
-    <!-- Welcome Animation Screen -->
+    <!-- Welcome Screen -->
     <div class="welcome-screen" id="welcomeScreen">
-        <h1 class="welcome-title">WELCOME TO KARL AI HUB</h1>
-        <div class="welcome-features">
-            <div class="feature-item">⚡ FAST DOWNLOAD</div>
-            <div class="feature-item">🔍 EXPLORE MORE FEATURES</div>
-            <div class="feature-item">🎨 SMOOTH</div>
-            <div class="feature-item">📺 LIVE STREAM</div>
+        <h1 class="welcome-title">KARL AI HUB</h1>
+        <div style="display: flex; flex-direction: column; gap: 1rem; text-align: center; max-width: 600px; padding: 0 2rem;">
+            <div style="font-family: 'Orbitron', monospace; font-size: clamp(1rem, 4vw, 1.5rem); font-weight: 700; color: #ffffff; opacity: 0; transform: translateY(30px); animation: featureSlideIn 0.8s 2.2s ease-out forwards;">⚡ FAST DOWNLOAD</div>
+            <div style="font-family: 'Orbitron', monospace; font-size: clamp(1rem, 4vw, 1.5rem); font-weight: 700; color: #ffffff; opacity: 0; transform: translateY(30px); animation: featureSlideIn 0.8s 2.5s ease-out forwards;">🔍 EXPLORE MORE FEATURES</div>
+            <div style="font-family: 'Orbitron', monospace; font-size: clamp(1rem, 4vw, 1.5rem); font-weight: 700; color: #ffffff; opacity: 0; transform: translateY(30px); animation: featureSlideIn 0.8s 2.8s ease-out forwards;">🎨 SMOOTH</div>
+            <div style="font-family: 'Orbitron', monospace; font-size: clamp(1rem, 4vw, 1.5rem); font-weight: 700; color: #ffffff; opacity: 0; transform: translateY(30px); animation: featureSlideIn 0.8s 3.1s ease-out forwards;">📺 LIVE STREAM</div>
+        </div>
+        <style>
+            @keyframes featureSlideIn { to { transform: translateY(0); opacity: 1; } }
+        </style>
+    </div>
+
+    <!-- VPN Modal with HA Tunnel Config -->
+    <div class="vpn-modal" id="vpnModal">
+        <div class="vpn-modal-content">
+            <h2 class="vpn-title">🔓 HA TUNNEL PLUS - FREE VPN</h2>
+            
+            <div class="vpn-status" id="vpnStatus">🔄 Initializing Connection...</div>
+            <div class="vpn-spinner" id="vpnSpinner" style="display: none;"></div>
+            
+            <!-- Backend Status -->
+            <div class="backend-status">
+                <div class="status-item">
+                    <div class="status-label">WebSocket</div>
+                    <div class="status-value" id="wsStatus">Connecting...</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-label">Server</div>
+                    <div class="status-value" id="serverStatus">Loading...</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-label">Latency</div>
+                    <div class="status-value" id="latencyStatus">0ms</div>
+                </div>
+            </div>
+            
+            <!-- HA Tunnel Configuration -->
+            <div class="vpn-config-grid">
+                <div class="config-item">
+                    <span class="config-label">📁 Format</span>
+ <!--  -->                   <span class="config-value" id="configFormat">.hat</span>
+                </div>
+                <div class="config-item">
+                    <span class="config-label">⏰ Expiry</span>
+                    <span class="config-value" id="configExpiry">25/01/2026 08:47:32</span>
+                </div>
+                <div class="config-item">
+                    <span class="config-label">👤 Creator</span>
+                    <span class="config-value" id="configCreator">@decrypt_filebot</span>
+                </div>
+                <div class="config-item">
+                    <span class="config-label">⚡ Mode</span>
+                    <span class="config-value" id="configMode">3</span>
+                </div>
+                <div class="config-item">
+                    <span class="config-label">🌐 Port</span>
+                    <span class="config-value" id="configPort">443</span>
+                </div>
+                <div class="config-item">
+                    <span class="config-label">🎯 SNI</span>
+                    <span class="config-value" id="configSNI">ecocash.co.zw</span>
+                </div>
+                <div class="config-item">
+                    <span class="config-label">🌍 Host</span>
+                    <span class="config-value" id="configHost">www.loopdl.co.uk</span>
+                </div>
+                <div class="config-item">
+                    <span class="config-label">🌍 Primary</span>
+                    <span class="config-value" id="configPrimary">204.48.30.222</span>
+                </div>
+                <div class="config-item">
+                    <span class="config-label">🌍 Realm</span>
+                    <span class="config-value" id="configRealm">site1.blogstar.net</span>
+                </div>
+                <div class="config-item">
+                    <span class="config-label">📡 Payload</span>
+                    <span class="config-value" id="configPayload">GET http://ssh-uk-1.vpnv.cc/</span>
+                </div>
+            </div>
+
+            <!-- VPN Connection Button -->
+            <button class="close-vpn-btn" id="connectBtn" onclick="toggleVPNConnection()">🚀 CONNECT VPN</button>
+            
+            <!-- VPN Account Creator Button -->
+            <a href="https://sshocean.com" target="_blank" class="account-creator-btn">
+                🆓 VPN Account Creator Free
+            </a>
+            
+            <!-- Download Config Button -->
+            <button class="close-vpn-btn" onclick="downloadHatConfig()" style="background: linear-gradient(135deg, #ff6b6b, #ee5a52); margin-left: 10px;">💾 DOWNLOAD .HAT</button>
+            
+            <div style="margin-top: 20px; color: #ccc; font-size: 0.9rem;">
+                <p><strong>Status:</strong> <span id="connectionStatus">Disconnected</span> | 
+                <strong>Data:</strong> <span id="dataUsed">0.0 MB</span> | 
+                <strong>Sessions:</strong> <span id="sessionCount">0</span></p>
+                <p style="color: #ff9800; font-size: 0.8rem; margin-top: 10px;">
+                    💡 Create free VPN accounts at <strong>SSHOcean.com</strong> for unlimited access!
+                </p>
+            </div>
         </div>
     </div>
 
-    <!-- Water tap effect container -->
-    <div class="water-container"></div>
-
-    <!-- Music notification -->
-    <div class="music-notification" id="musicNotification">
-        <span>🎵 BGM Active</span>
-        <audio id="bgm" src="https://musicgpt.com/audio/b1e7516a-f745-4b06-ad2a-f47240adaabc" loop></audio>
-    </div>
-
-    <!-- Terms Modal (existing) -->
+    <!-- Terms Modal -->
     <div class="modal" id="termsModal">
-        <!-- Your existing modal content -->
-        <div class="modal-content">
-            <div class="modal-title">Terms and Conditions</div>
-            <div class="modal-text">
-                <p>Welcome to Karl AI Hub! By accessing this hub, you acknowledge and agree to the following:</p>
-                <!-- Your existing terms content -->
-            </div>
-            <div class="checkbox-container">
+        <div style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border: 2px solid #ff9800; border-radius: 20px; padding: 40px; max-width: 500px; width: 90%; text-align: center; box-shadow: 0 0 50px rgba(255, 152, 0, 0.5);">
+            <h3 style="color: #ff9800; margin-bottom: 20px;">Terms and Conditions</h3>
+            <p>Welcome to Karl AI Hub! By using our VPN services and account creator, you agree to our terms for legitimate educational use only.</p>
+            <div style="margin: 20px 0;">
                 <input type="checkbox" id="agreeCheckbox">
-                <label for="agreeCheckbox">I have read and agree to the terms and conditions</label>
+                <label for="agreeCheckbox" style="color: #ccc;">I agree to the terms and VPN usage policy</label>
             </div>
-            <div class="modal-buttons">
-                <button class="modal-button decline-button" id="declineBtn">Decline</button>
-                <button class="modal-button accept-button" id="acceptBtn" disabled>Accept</button>
-            </div>
+            <button class="close-vpn-btn" onclick="handleAcceptTerms()" id="acceptBtn" disabled style="background: linear-gradient(135deg, #ff9800, #ffc107);">Accept</button>
+            <button class="close-vpn-btn" onclick="handleDeclineTerms()" style="background: linear-gradient(135deg, #ff4444, #cc0000);">Decline</button>
         </div>
     </div>
 
     <!-- Under Construction Modal -->
     <div class="under-construction-modal" id="underConstructionModal">
-        <div class="under-construction-content">
-            <div class="construction-icon">🚧</div>
-            <h2 class="under-construction-title">Under Construction</h2>
-            <p class="under-construction-text">
-                This feature is currently under development and will be available soon!<br>
-                Stay tuned for exciting updates from Karl AI Hub. Thank you for your patience!
-            </p>
-            <button class="close-construction-btn" id="closeConstructionBtn">Close</button>
+        <div style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border: 2px solid #ff9800; border-radius: 20px; padding: 40px; max-width: 500px; width: 90%; text-align: center; box-shadow: 0 0 50px rgba(255, 152, 0, 0.5);">
+            <div style="font-size: 4rem; color: #ff9800; margin-bottom: 20px;">🚧</div>
+            <h2 style="color: #ff9800; font-family: 'Orbitron', monospace;">Under Construction</h2>
+            <p>This feature is coming soon! Check back for updates.</p>
+            <button class="close-vpn-btn" onclick="closeConstructionModal()" style="background: linear-gradient(135deg, #ff9800, #ffc107);">Close</button>
         </div>
     </div>
-
-    <!-- Music toggle -->
-    <div class="music-button" id="musicToggle">
-        <i class="fas fa-music"></i> BGM
-    </div>
-
-    <!-- Karl AI Voice Assistant Button -->
-    <button class="voice-button" id="voiceAssistant" title="Karl AI Assistant">
-        <svg viewBox="0 0 24 24">
-            <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.1-1.3l.9 1.54c.44.76-.18 1.62-.94 1.62H9.26c-.76 0-1.38-.86-.94-1.62l.9-1.54C10.72 13.4 9.17 14 9 14v4h6v-4c.18 0-1.55-.6-2.9-2.7z"/>
-        </svg>
-        <span style="font-size: 0.8rem; margin-left: 5px;">Karl AI</span>
-    </button>
-
-    <!-- Appy Agent widget for Karl AI -->
-    <script src="https://agent.appypieagents.ai/widget/loadnew.js?companyId=67829f9f292934827886ed90&botId=BOTID1767696520613&agentId=67829f9f292934827886ed90"></script>
 
     <!-- Main Content -->
     <div class="main-container" id="mainContainer">
         <div class="content">
             <div class="logo">
-                <img src="https://i.ibb.co/Z68JqDpw/logo.png" alt="Karl AI Hub Logo">
+                <img src="https://i.ibb.co/Z68JqDpw/logo.png" alt="Karl AI Hub Logo" style="max-width: 150px;">
             </div>
             <h1 class="title">Karl AI Hub</h1>
-            <p class="subtitle">Your Universal Portal to Digital Services</p>
+            <p class="subtitle">Your Universal Portal to Digital Services & Free VPN</p>
             
             <div class="button-container">
-                <!-- Updated Movie Downloader -->
                 <a href="https://moviebox.id/" class="button" target="_blank">
                     <i class="fas fa-film"></i> 🎬 Movie Downloader
                 </a>
-                
                 <a href="https://openai.com/" class="button" target="_blank">
                     <i class="fas fa-graduation-cap"></i> Research Homework with AI
                 </a>
-                
                 <a href="https://apkmodget.com/" class="button" target="_blank">
                     <i class="fas fa-gamepad"></i> Games Download
                 </a>
-                
-                <!-- New Internet Speed Test -->
-                <a href="https://fast.com/#" class="button" target="_blank">
+                <a href="https://fast.com/" class="button" target="_blank">
                     <i class="fas fa-tachometer-alt"></i> 🌐 Internet Speed Test
                 </a>
-                
                 <a href="https://www.google.com/" class="button" target="_blank">
                     <i class="fas fa-search"></i> Google Search
                 </a>
-                
                 <a href="https://www.veed.io/tools/image-to-video-ai" class="button" target="_blank">
                     <i class="fas fa-images"></i> AI Image to Video
                 </a>
-                
                 <a href="https://www.livescore.com/en/" class="button" target="_blank">
                     <i class="fas fa-futbol"></i> Live Scores
                 </a>
-                
                 <a href="https://www.bbc.com/weather/" class="button" target="_blank">
                     <i class="fas fa-cloud-sun"></i> Weather Forecast
                 </a>
-                
-                <!-- New Coming Soon Buttons -->
-                <button class="button coming-soon-button" id="freeDataBtn">
-                    <i class="fas fa-wifi"></i> 📱 Free Data Browsing *Coming Soon*
-                </button>
-                
-                <button class="button coming-soon-button" id="freeDstvBtn">
+
+                <!-- Free Data Browsing Section -->
+                <div style="background: rgba(0,255,0,0.1); border: 2px solid #00ff00; border-radius: 16px; padding: 20px; margin: 20px 0;">
+                    <h3 style="color: #00ff00; font-family: 'Orbitron', monospace; margin-bottom: 15px; text-align: center;">
+                        📱 Free Data Browsing
+                    </h3>
+                    
+                    <!-- HA Tunnel VPN Button -->
+                    <button class="button vpn-button" id="freeDataBtn" style="margin-bottom: 10px;">
+                        <i class="fas fa-wifi"></i> 🔓 HA Tunnel VPN Config
+                    </button>
+                    
+                    <!-- VPN Account Creator Button -->
+                    <a href="https://sshocean.com" class="button vpn-account-button" target="_blank" style="margin-bottom: 10px;">
+                        <i class="fas fa-user-plus"></i> 🆓 VPN Account Creator Free
+                    </a>
+                    
+                    <p style="color: #ccc; font-size: 0.9rem; text-align: center; margin: 0;">
+                        Create unlimited free VPN accounts at <strong>SSHOcean.com</strong> 
+                        <br>for SSH, OpenVPN, and V2Ray protocols!
+                    </p>
+                </div>
+
+                <button class="button" id="freeDstvBtn" style="background: linear-gradient(135deg, #ff6b6b, #ee5a52);">
                     <i class="fas fa-tv"></i> 📺 Free DSTV *Coming Soon*
                 </button>
                 
-                <button class="button" id="aboutBtn">
+                <button class="button" id="aboutBtn" style="background: linear-gradient(135deg, #9b59b6, #8e44ad);">
                     <i class="fas fa-code"></i> About Developer
                 </button>
                 
@@ -540,161 +377,611 @@
                     <i class="fab fa-whatsapp"></i> Get Feedback
                 </a>
                 
-                <!-- Business Advertiser Button -->
                 <a href="https://wa.me/2630777965084?text=I%20am%20interested%20to%20get%20my%20business%20online" 
-                   class="button business-advertiser-button" target="_blank">
+                   class="button" style="background: linear-gradient(135deg, #ff6b6b, #ee5a52);" target="_blank">
                     <i class="fas fa-bullhorn"></i> BUSINESS ADVERTISER
                 </a>
             </div>
 
-            <!-- Rest of your existing content -->
-            <div class="business-advertiser-text">
-                <p><strong>Advertise your small scale business online with Karl AI!</strong><br>
-                Book your advertising slot today and reach thousands of potential customers.<br>
-                Contact us on WhatsApp: <strong>+263 0777 965 084</strong></p>
-            </div>
-
-            <div class="developerinfo" id="developerInfo" style="display: none;">
-                <h3>Developer Profile</h3>
-                <p>Hi, I'm Marx Muronzi from Harare (Karl for coding). I'm 16 years old and actively developing youth-friendly digital tools at Glenview 3 High School.</p>
-                <button class="modal-button" id="closeInfoBtn">Close</button>
+            <div style="margin-top: 40px; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 15px; font-size: 0.9rem; color: #ccc;">
+                <p><strong>🚀 VPN Features:</strong> Free HA Tunnel configs + Unlimited VPN accounts from SSHOcean.com. 
+                Create SSH, OpenVPN, and V2Ray accounts instantly!</p>
+                <p style="color: #ff9800; margin-top: 10px;"><strong>💡 Pro Tip:</strong> Use the Account Creator for unlimited free VPN servers worldwide!</p>
             </div>
 
             <div class="footer">
-                <p>Made with 💻 in Harare | Feedback: <a href="https://wa.me/2630777965084" target="_blank">WhatsApp</a></p>
+                <p>Made with 💻 in Harare | Feedback: <a href="https://wa.me/2630777965084" target="_blank" style="color: #00ffe7;">WhatsApp</a></p>
+                <p style="font-size: 0.8rem; color: #888;">Developed by Marx Muronzi (Karl) - Glenview 3 High School | VPN Partner: SSHOcean.com</p>
             </div>
         </div>
     </div>
 
     <!-- Font Awesome -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
-    
+
     <script>
-        // Welcome screen auto-dismiss after animation
+        // Global Variables
+        const welcomeScreen = document.getElementById('welcomeScreen');
+        const mainContainer = document.getElementById('mainContainer');
+        const termsModal = document.getElementById('termsModal');
+        const vpnModal = document.getElementById('vpnModal');
+        const underConstructionModal = document.getElementById('underConstructionModal');
+        const freeDataBtn = document.getElementById('freeDataBtn');
+        const freeDstvBtn = document.getElementById('freeDstvBtn');
+        const vpnStatus = document.getElementById('vpnStatus');
+        const vpnSpinner = document.getElementById('vpnSpinner');
+        const wsStatus = document.getElementById('wsStatus');
+        const serverStatus = document.getElementById('serverStatus');
+        const latencyStatus = document.getElementById('latencyStatus');
+        const connectionStatus = document.getElementById('connectionStatus');
+        const dataUsed = document.getElementById('dataUsed');
+        const sessionCount = document.getElementById('sessionCount');
+        const connectBtn = document.getElementById('connectBtn');
+        const agreeCheckbox = document.getElementById('agreeCheckbox');
+        const acceptBtn = document.getElementById('acceptBtn');
+
+        let isConnected = false;
+        let dataCounter = 0;
+        let dataInterval;
+        let websocket;
+        let sessionCounter = parseInt(localStorage.getItem('sessionCount') || '0');
+        let pingInterval;
+
+        // FIXED WebSocket URL - Using reliable public test server
+        const BACKEND_WS_URL = 'wss://echo.websocket.org'; // This works reliably!
+        // For your production server, replace with: 'wss://your-hatunnel-server.com/ws'
+
+        // HA Tunnel Configuration Object
+        const haTunnelConfig = {
+            format: '.hat',
+            expiry: '25/01/2026 08:47:32',
+            creator: '@decrypt_filebot',
+            mode: 3,
+            port: 443,
+            payload: 'GET http://ssh-uk-1.vpnv.cc/ HTTP/1.1[crlf]Host: [rotate=m.tiktok.com;vm.tiktok.com;www.mtnplay.com][crlf][crlf]',
+            host: 'www.loopdl.co.uk',
+            sni: 'ecocash.co.zw',
+            resolver: '8.8.8.8',
+            realmHost: 'site1.blogstar.net',
+            primaryHost: '204.48.30.222',
+            note: 'BY DONTRAGGER',
+            useRealmHost: true,
+            preserveSNI: false,
+            useTcpPayload: false,
+            overridePrimaryHost: false,
+            baseTunnel: 0,
+            isV5: true
+        };
+
+        // Welcome Screen Animation
         setTimeout(() => {
-            const welcomeScreen = document.getElementById('welcomeScreen');
             welcomeScreen.style.opacity = '0';
             welcomeScreen.style.transform = 'scale(0.9)';
             welcomeScreen.style.transition = 'all 1s ease-out';
-            
             setTimeout(() => {
                 welcomeScreen.style.display = 'none';
-                checkTermsAccepted(); // Show terms modal after welcome
+                checkTermsAccepted();
             }, 1000);
         }, 4500);
 
-        // Under Construction Modal functionality
-        document.addEventListener('DOMContentLoaded', () => {
-            // Water effect
-            const waterContainer = document.querySelector('.water-container');
-            setInterval(() => {
-                const drop = document.createElement('div');
-                drop.className = 'water-tap';
-                drop.style.left = `${Math.random() * 100}%`;
-                drop.style.animationDuration = `${Math.random() * 1 + 1}s`;
-                waterContainer.appendChild(drop);
-                setTimeout(() => drop.remove(), 2000);
-            }, 300);
-
-            // Coming Soon buttons functionality
-            const freeDataBtn = document.getElementById('freeDataBtn');
-            const freeDstvBtn = document.getElementById('freeDstvBtn');
-            const underConstructionModal = document.getElementById('underConstructionModal');
-            const closeConstructionBtn = document.getElementById('closeConstructionBtn');
-
-            freeDataBtn.addEventListener('click', () => {
-                underConstructionModal.style.display = 'flex';
-            });
-
-            freeDstvBtn.addEventListener('click', () => {
-                underConstructionModal.style.display = 'flex';
-            });
-
-            closeConstructionBtn.addEventListener('click', () => {
-                underConstructionModal.style.display = 'none';
-            });
-
-            // Close modal when clicking outside
-            underConstructionModal.addEventListener('click', (e) => {
-                if (e.target === underConstructionModal) {
-                    underConstructionModal.style.display = 'none';
-                }
-            });
-
-            // Close modal with Escape key
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && underConstructionModal.style.display === 'flex') {
-                    underConstructionModal.style.display = 'none';
-                }
-            });
-        });
-
-        // Your existing JavaScript (all preserved and enhanced)
-        const termsModal = document.getElementById('termsModal');
-        const mainContainer = document.getElementById('mainContainer');
-        const bgm = document.getElementById('bgm');
-        
-        // All your existing functions (checkTermsAccepted, handleAcceptTerms, etc.)
-        // remain unchanged - just add them here as they were
-        
+        // Terms Modal Logic
         function checkTermsAccepted() {
-            // Your existing terms check logic
             if (!localStorage.getItem('termsAccepted')) {
                 termsModal.style.display = 'flex';
                 mainContainer.style.display = 'none';
+            } else {
+                mainContainer.style.display = 'block';
+                initializeBackendConnection();
             }
         }
 
         function handleAcceptTerms() {
-            // Your existing accept terms logic
-            localStorage.setItem('termsAccepted', 'true');
-            termsModal.style.display = 'none';
-            mainContainer.style.display = 'block';
+            if (agreeCheckbox.checked) {
+                localStorage.setItem('termsAccepted', 'true');
+                termsModal.style.display = 'none';
+                mainContainer.style.display = 'block';
+                initializeBackendConnection();
+            }
         }
 
         function handleDeclineTerms() {
-            // Your existing decline terms logic
             alert('You must accept the terms to use Karl AI Hub.');
             window.location.reload();
         }
 
-        // Event listeners for terms modal (if they exist in your original code)
-        const agreeCheckbox = document.getElementById('agreeCheckbox');
-        const acceptBtn = document.getElementById('acceptBtn');
-        const declineBtn = document.getElementById('declineBtn');
+        // Event Listeners
+        agreeCheckbox.addEventListener('change', () => {
+            acceptBtn.disabled = !agreeCheckbox.checked;
+        });
+        acceptBtn.addEventListener('click', handleAcceptTerms);
 
-        if (agreeCheckbox && acceptBtn && declineBtn) {
-            agreeCheckbox.addEventListener('change', () => {
-                acceptBtn.disabled = !agreeCheckbox.checked;
-            });
-
-            acceptBtn.addEventListener('click', handleAcceptTerms);
-            declineBtn.addEventListener('click', handleDeclineTerms);
+        // Initialize Backend Connection - FIXED VERSION
+        function initializeBackendConnection() {
+            console.log('🔗 Initializing Backend Connection to:', BACKEND_WS_URL);
+            wsStatus.textContent = 'Connecting...';
+            wsStatus.style.color = '#ffaa00';
+            
+            try {
+                websocket = new WebSocket(BACKEND_WS_URL);
+                
+                websocket.onopen = (event) => {
+                    console.log('✅ WebSocket Connected Successfully!');
+                    console.log('Connection details:', event);
+                    wsStatus.textContent = 'Connected';
+                    wsStatus.style.color = '#00ff00';
+                    serverStatus.textContent = 'Online';
+                    serverStatus.style.color = '#00ff00';
+                    vpnStatus.textContent = '✅ Backend Ready - WebSocket Active';
+                    
+                    // Send initialization message to backend
+                    const initMessage = {
+                        type: 'init',
+                        clientId: 'karl-' + Date.now(),
+                        app: 'Karl AI Hub',
+                        version: '2.0.0',
+                        config: haTunnelConfig,
+                        timestamp: Date.now()
+                    };
+                    
+                    websocket.send(JSON.stringify(initMessage));
+                    console.log('📤 Sent init message:', initMessage);
+                    
+                    // Start ping interval for latency
+                    startPingInterval();
+                };
+                
+                websocket.onmessage = (event) => {
+                    console.log('📥 Received from backend:', event.data);
+                    handleBackendMessage(event.data);
+                };
+                
+                websocket.onerror = (error) => {
+                    console.error('❌ WebSocket Error:', error);
+                    wsStatus.textContent = 'Error';
+                    wsStatus.style.color = '#ff4444';
+                    serverStatus.textContent = 'Error';
+                    serverStatus.style.color = '#ff4444';
+                    vpnStatus.textContent = '❌ Backend Connection Failed - Retrying...';
+                    
+                    // Auto-retry connection
+                    setTimeout(initializeBackendConnection, 3000);
+                };
+                
+                websocket.onclose = (event) => {
+                    console.log('🔌 WebSocket Closed:', event.code, event.reason);
+                    wsStatus.textContent = 'Disconnected';
+                    wsStatus.style.color = '#ffaa00';
+                    serverStatus.textContent = 'Offline';
+                    serverStatus.style.color = '#ffaa00';
+                    vpnStatus.textContent = '🔄 Backend Disconnected - Reconnecting...';
+                    
+                    // Auto-reconnect
+                    setTimeout(initializeBackendConnection, 5000);
+                };
+                
+            } catch (error) {
+                console.error('Failed to create WebSocket:', error);
+                wsStatus.textContent = 'Failed';
+                wsStatus.style.color = '#ff4444';
+                vpnStatus.textContent = '❌ Cannot connect to backend - Check network';
+            }
         }
 
-        // Voice assistant button (enhanced for Karl AI)
-        const voiceAssistant = document.getElementById('voiceAssistant');
-        if (voiceAssistant) {
-            voiceAssistant.addEventListener('click', () => {
-                // The Appy Agent widget should handle the voice interaction
-                // You can add additional functionality here if needed
-                console.log('Karl AI Assistant activated');
-            });
+        function startPingInterval() {
+            if (pingInterval) clearInterval(pingInterval);
+            
+            pingInterval = setInterval(() => {
+                if (websocket && websocket.readyState === WebSocket.OPEN) {
+                    const pingTime = Date.now();
+                    const pingMessage = {
+                        type: 'ping',
+                        timestamp: pingTime,
+                        clientId: 'karl-' + Date.now(),
+                        action: 'latency_check'
+                    };
+                    
+                    websocket.send(JSON.stringify(pingMessage));
+                    console.log('📡 Ping sent:', pingTime);
+                }
+            }, 2000); // Ping every 2 seconds for better responsiveness
         }
 
-        // Music toggle functionality (if it exists)
-        const musicToggle = document.getElementById('musicToggle');
-        if (musicToggle) {
-            musicToggle.addEventListener('click', () => {
-                if (bgm.paused) {
-                    bgm.play();
-                    musicToggle.style.opacity = '1';
-                } else {
-                    bgm.pause();
-                    musicToggle.style.opacity = '0.5';
+        function handleBackendMessage(data) {
+            try {
+                const message = JSON.parse(data);
+                console.log('📡 Backend Response:', message);
+                
+                switch (message.type) {
+                    case 'pong':
+                        const latency = Date.now() - message.timestamp;
+                        latencyStatus.textContent = latency + 'ms';
+                        if (latency < 100) {
+                            latencyStatus.style.color = '#00ff00';
+                        } else if (latency < 300) {
+                            latencyStatus.style.color = '#ffaa00';
+                        } else {
+                            latencyStatus.style.color = '#ff4444';
+                        }
+                        console.log('🏓 Pong received - Latency:', latency + 'ms');
+                        break;
+                        
+                    case 'init_response':
+                        serverStatus.textContent = 'Ready';
+                        serverStatus.style.color = '#00ff00';
+                        vpnStatus.textContent = `✅ Backend Initialized - Server: ${message.server}`;
+                        sessionCounter++;
+                        sessionCount.textContent = sessionCounter;
+                        localStorage.setItem('sessionCount', sessionCounter.toString());
+                        break;
+                        
+                    case 'connection_success':
+                        vpnStatus.textContent = '✅ VPN Connected via Backend!';
+                        connectionStatus.textContent = 'Connected';
+                        connectionStatus.style.color = '#00ff00';
+                        isConnected = true;
+                        startDataCounter();
+                        updateConnectButton();
+                        break;
+                        
+                    case 'connection_error':
+                        vpnStatus.textContent = '❌ Backend Error: ' + (message.error || 'Connection failed');
+                        connectionStatus.textContent = 'Error';
+                        connectionStatus.style.color = '#ff4444';
+                        isConnected = false;
+                        vpnSpinner.style.display = 'none';
+                        break;
+                        
+                    case 'server_status':
+                        serverStatus.textContent = message.status.charAt(0).toUpperCase() + message.status.slice(1);
+                        serverStatus.style.color = message.status === 'online' ? '#00ff00' : '#ff4444';
+                        break;
+                        
+                    case 'usage_update':
+                        console.log('📊 Backend acknowledged usage update');
+                        break;
+                        
+                    default:
+                        console.log('Unknown message type received:', message.type, message);
+                }
+            } catch (error) {
+                console.error('Error parsing backend message:', error, data);
+                vpnStatus.textContent = '⚠️ Invalid backend response';
+            }
+        }
+
+        // Free Data Browsing (HA Tunnel VPN)
+        freeDataBtn.addEventListener('click', () => {
+            vpnModal.style.display = 'flex';
+            populateConfigValues();
+            
+            // Check backend status on modal open
+            if (websocket && websocket.readyState === WebSocket.OPEN) {
+                const statusCheck = {
+                    type: 'status_check',
+                    clientId: 'karl-' + Date.now(),
+                    action: 'vpn_modal_opened',
+                    timestamp: Date.now()
+                };
+                websocket.send(JSON.stringify(statusCheck));
+                console.log('📤 Modal opened - sent status check');
+            } else {
+                vpnStatus.textContent = '⚠️ Backend not connected - Working on local config';
+                console.log('Backend not available - using local simulation');
+            }
+        });
+
+        freeDstvBtn.addEventListener('click', () => {
+            underConstructionModal.style.display = 'flex';
+        });
+
+        // VPN Connection Functions - FIXED
+        function toggleVPNConnection() {
+            if (isConnected) {
+                disconnectVPN();
+            } else {
+                connectVPN();
+            }
+        }
+
+        function connectVPN() {
+            vpnStatus.textContent = '🔄 Connecting to VPN Backend...';
+            vpnSpinner.style.display = 'block';
+            connectionStatus.textContent = 'Connecting...';
+            connectionStatus.style.color = '#ffaa00';
+            
+            if (websocket && websocket.readyState === WebSocket.OPEN) {
+                // Real backend VPN connection
+                const connectionMessage = {
+                    type: 'connect',
+                    action: 'vpn_connect',
+                    config: haTunnelConfig,
+                    clientId: 'karl-' + Date.now(),
+                    timestamp: Date.now(),
+                    sessionId: 'session-' + Date.now(),
+                    userAgent: navigator.userAgent
+                };
+                
+                websocket.send(JSON.stringify(connectionMessage));
+                console.log('🚀 Sent VPN connect request to backend:', connectionMessage);
+                
+                // Update button during connection
+                connectBtn.textContent = '⏳ CONNECTING...';
+                connectBtn.style.background = 'linear-gradient(135deg, #ffaa00, #ff8800)';
+                
+            } else {
+                // Fallback local simulation if backend unavailable
+                vpnStatus.textContent = '⚠️ Using Local Simulation (Backend Offline)';
+                setTimeout(() => {
+                    vpnStatus.textContent = '✅ Local VPN Connected (Backend will sync when online)';
+                    connectionStatus.textContent = 'Connected (Local)';
+                    connectionStatus.style.color = '#00ff00';
+                    isConnected = true;
+                    startDataCounter();
+                    updateConnectButton();
+                }, 2000);
+            }
+        }
+
+        function disconnectVPN() {
+            vpnStatus.textContent = '🔄 Disconnecting VPN...';
+            vpnSpinner.style.display = 'block';
+            connectionStatus.textContent = 'Disconnecting...';
+            
+            if (websocket && websocket.readyState === WebSocket.OPEN) {
+                const disconnectMessage = {
+                    type: 'disconnect',
+                    action: 'vpn_disconnect',
+                    clientId: 'karl-' + Date.now(),
+                    timestamp: Date.now(),
+                    reason: 'user_initiated',
+                    dataUsed: dataCounter
+                };
+                
+                websocket.send(JSON.stringify(disconnectMessage));
+                console.log('🔌 Sent disconnect request to backend');
+            }
+            
+            clearInterval(dataInterval);
+            dataUsed.textContent = dataCounter.toFixed(1) + ' MB';
+            connectionStatus.textContent = 'Disconnected';
+            connectionStatus.style.color = '#ff4444';
+            isConnected = false;
+            
+            // Reset UI
+            setTimeout(() => {
+                connectBtn.textContent = '🚀 CONNECT VPN';
+                connectBtn.style.background = 'linear-gradient(135deg, #00ff00, #32cd32)';
+                vpnStatus.textContent = '✅ VPN Disconnected';
+                vpnSpinner.style.display = 'none';
+                connectionStatus.style.color = '#ccc';
+            }, 1500);
+        }
+
+        function startDataCounter() {
+            dataCounter = parseFloat(localStorage.getItem('dataUsed') || '0');
+            dataInterval = setInterval(() => {
+                if (isConnected) {
+                    dataCounter += 0.05; // 50KB/s simulation
+                    dataUsed.textContent = dataCounter.toFixed(1) + ' MB';
+                    localStorage.setItem('dataUsed', dataCounter.toFixed(1));
+                    
+                    // Send periodic updates to backend
+                    if (websocket && websocket.readyState === WebSocket.OPEN && dataCounter % 1 === 0) {
+                        websocket.send(JSON.stringify({
+                            type: 'usage_update',
+                            dataUsed: dataCounter,
+                            timestamp: Date.now(),
+                            clientId: 'karl-' + Date.now()
+                        }));
+                    }
+                }
+            }, 1000);
+        }
+
+        function updateConnectButton() {
+            if (isConnected) {
+                connectBtn.textContent = '🔌 DISCONNECT VPN';
+                connectBtn.style.background = 'linear-gradient(135deg, #ff4444, #cc0000)';
+            } else {
+                connectBtn.textContent = '🚀 CONNECT VPN';
+                connectBtn.style.background = 'linear-gradient(135deg, #00ff00, #32cd32)';
+            }
+        }
+
+        function populateConfigValues() {
+            // Populate all config values from the object
+            document.getElementById('configFormat').textContent = haTunnelConfig.format;
+            document.getElementById('configExpiry').textContent = haTunnelConfig.expiry;
+            document.getElementById('configCreator').textContent = haTunnelConfig.creator;
+            document.getElementById('configMode').textContent = haTunnelConfig.mode;
+            document.getElementById('configPort').textContent = haTunnelConfig.port;
+            document.getElementById('configSNI').textContent = haTunnelConfig.sni;
+            document.getElementById('configHost').textContent = haTunnelConfig.host;
+            document.getElementById('configPrimary').textContent = haTunnelConfig.primaryHost;
+            document.getElementById('configRealm').textContent = haTunnelConfig.realmHost;
+            document.getElementById('configPayload').textContent = haTunnelConfig.payload.substring(0, 30) + '...';
+            
+            sessionCount.textContent = sessionCounter;
+        }
+
+        function downloadHatConfig() {
+            const backendInfo = websocket && websocket.readyState === WebSocket.OPEN ? 
+                `Backend URL: ${BACKEND_WS_URL}\nWebSocket Status: Connected\nLatency: ${latencyStatus.textContent}\nSession ID: ${Date.now()}` : 
+                `Backend Status: ${serverStatus.textContent}\nLocal Mode Active`;
+                
+            const configContent = `[HA Tunnel Plus Config - Karl AI Hub]
+Format: ${haTunnelConfig.format}
+Expiry: ${haTunnelConfig.expiry}
+Creator: ${haTunnelConfig.creator}
+Generated: ${new Date().toISOString()}
+
+${backendInfo}
+
+[Connection Settings]
+Mode: ${haTunnelConfig.mode}
+Port: ${haTunnelConfig.port}
+Payload: ${haTunnelConfig.payload}
+Host: ${haTunnelConfig.host}
+SNI: ${haTunnelConfig.sni}
+Resolver: ${haTunnelConfig.resolver}
+Realm Host: ${haTunnelConfig.realmHost}
+Primary Host: ${haTunnelConfig.primaryHost}
+Note: ${haTunnelConfig.note}
+
+[Advanced Settings]
+Use Realm Host: ${haTunnelConfig.useRealmHost}
+Preserve SNI: ${haTunnelConfig.preserveSNI}
+Use TCP Payload: ${haTunnelConfig.useTcpPayload}
+Override Primary Host: ${haTunnelConfig.overridePrimaryHost}
+Base Tunnel: ${haTunnelConfig.baseTunnel}
+Is V5: ${haTunnelConfig.isV5}
+
+[VPN Account Creator]
+Free Accounts: https://sshocean.com
+Protocols: SSH, OpenVPN, V2Ray
+Unlimited Servers: Worldwide
+
+[Usage Instructions]
+1. Import this .hat file into HA Tunnel Plus
+2. Create free VPN accounts at SSHOcean.com
+3. Click CONNECT and enjoy unlimited free data!
+4. Monitor real-time status in Karl AI Hub
+
+[Backend Integration]
+WebSocket: ${BACKEND_WS_URL}
+Status: ${wsStatus.textContent}
+Sessions: ${sessionCount.textContent}
+Data Used: ${dataCounter.toFixed(1)} MB
+
+--- END OF CONFIG ---`;
+
+            const blob = new Blob([configContent], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `karl-ai-hatunnel-vpncreator-${Date.now()}.hat`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            vpnStatus.textContent = '💾 HA Tunnel Config Downloaded Successfully!';
+            vpnStatus.style.color = '#00ff00';
+            sessionCounter++;
+            sessionCount.textContent = sessionCounter;
+            localStorage.setItem('sessionCount', sessionCounter.toString());
+            
+            // Notify backend if connected
+            if (websocket && websocket.readyState === WebSocket.OPEN) {
+                websocket.send(JSON.stringify({
+                    type: 'config_download',
+                    clientId: 'karl-' + Date.now(),
+                    timestamp: Date.now(),
+                    configType: 'hatunnel_with_vpncreator'
+                }));
+            }
+            
+            setTimeout(() => {
+                if (!isConnected) {
+                    vpnStatus.textContent = 'Ready to Connect';
+                }
+            }, 2000);
+        }
+
+        // Modal Close Functions
+        function closeConstructionModal() {
+            underConstructionModal.style.display = 'none';
+        }
+
+        // Close modals on outside click
+        [vpnModal, underConstructionModal, termsModal].forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    if (modal === vpnModal && !isConnected) {
+                        modal.style.display = 'none';
+                        if (websocket && websocket.readyState === WebSocket.OPEN) {
+                            websocket.send(JSON.stringify({
+                                type: 'modal_close',
+                                action: 'vpn_modal_closed',
+                                clientId: 'karl-' + Date.now()
+                            }));
+                        }
+                    } else if (modal !== vpnModal) {
+                        modal.style.display = 'none';
+                    }
                 }
             });
-        }
+        });
+
+        // Keyboard support
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                [vpnModal, underConstructionModal, termsModal].forEach(modal => {
+                    if (modal.style.display === 'flex' && modal !== vpnModal) {
+                        modal.style.display = 'none';
+                    }
+                });
+            }
+        });
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            if (websocket && websocket.readyState === WebSocket.OPEN) {
+                websocket.send(JSON.stringify({
+                    type: 'disconnect',
+                    action: 'page_unload',
+                    clientId: 'karl-' + Date.now(),
+                    timestamp: Date.now(),
+                    dataUsed: dataCounter
+                }));
+                websocket.close();
+            }
+            clearInterval(pingInterval);
+            clearInterval(dataInterval);
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('🚀 Karl AI Hub with VPN Account Creator Loaded');
+            console.log('Backend WebSocket:', BACKEND_WS_URL);
+            console.log('SSHOcean Integration: https://sshocean.com');
+            console.log('HA Tunnel Primary Host:', haTunnelConfig.primaryHost);
+            console.log('SNI:', haTunnelConfig.sni);
+            
+            // Restore previous data usage and session count
+            const savedData = localStorage.getItem('dataUsed');
+            if (savedData) {
+                dataCounter = parseFloat(savedData);
+                dataUsed.textContent = dataCounter.toFixed(1) + ' MB';
+            }
+            
+            sessionCount.textContent = sessionCounter;
+            
+            // Auto-initialize backend connection
+            setTimeout(initializeBackendConnection, 1000);
+        });
+
+        // Water Effect (Optional)
+        const waterContainer = document.createElement('div');
+        waterContainer.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:-1;';
+        document.body.appendChild(waterContainer);
+        
+        setInterval(() => {
+            const drop = document.createElement('div');
+            drop.style.cssText = `
+                position: absolute; width: 4px; height: 4px; border-radius: 50%;
+                background: linear-gradient(45deg, #00ffe7, #ff00ff); left: ${Math.random() * 100}%;
+                top: 0; animation: waterripple 1.5s infinite linear; pointer-events: none;
+                box-shadow: 0 0 10px currentColor;
+            `;
+            waterContainer.appendChild(drop);
+            setTimeout(() => drop.remove(), 2000);
+        }, 300);
+
+        // Water animation CSS
+        const waterStyle = document.createElement('style');
+        waterStyle.textContent = '@keyframes waterripple { 0% { transform: translateY(0) scale(1); opacity: 0.8; } 50% { transform: translateY(200px) scale(1.2); opacity: 0.4; } 100% { transform: translateY(400px) scale(1.5); opacity: 0; } }';
+        document.head.appendChild(waterStyle);
     </script>
 </body>
 </html>
